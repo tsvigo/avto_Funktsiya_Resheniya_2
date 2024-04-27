@@ -63,16 +63,7 @@ file.close();
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::ifstream is( //NOTE: сигналы 1
-        // "/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/neurons_and_signal.txt" // 1.bmp
-        //   "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/1-1/neyroni_i_signal.txt" // 1-1.bmp
-        
-        //  "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/0/neyroni_i_signal.txt"
-        // 1:
-        //  "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/1/neurons_and_signal-2.txt" //NOTE: BMP
-        // 2:
-        //    "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/1-1(2)/neyroni_i_signal.txt"
-        // 3:
-      //  "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/0-2/neurons_and_signal.txt"
+
        Nazvaniye_fayla_s_neyronami_i_signalom.toStdString().c_str()
         //NOTE: считывание в вектор нейронов и сигналов из файла (НАДО Менять для подстройки)
         );
@@ -81,7 +72,9 @@ file.close();
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::ifstream is2("/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4");
+    std::ifstream is2(
+    "/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4"
+    );
     // /home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4
     std::istream_iterator<unsigned long long> start2(is2), end2;
     std::vector<unsigned long long> list_of_synapses(start2, end2);
