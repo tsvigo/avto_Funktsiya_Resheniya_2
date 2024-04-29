@@ -10,7 +10,7 @@ using namespace std;
 #include <QTextStream>
 #include <QDebug>
 #include <QProcess>
-
+#include <QListWidget>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \brief list_of_synapses
 /// переменные:
@@ -26,10 +26,15 @@ QString
 bool Odin_Uchitelia;
 bool Odin_Programmi;
      QString line;
+ //    QListWidget listWidget;
+     QString myString ;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////// \brief readFileLineByLine
 ////////////////////////////////////////////////////////////////////////////////////////////////////// \param filename
 void readFileLineByLine(const QString& filename) {
+
+QListWidget listWidget;
+
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Could not open file for reading:" << filename;
@@ -79,11 +84,36 @@ void readFileLineByLine(const QString& filename) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// 
 /// TODO: если программа считает что это 1 (неправильно) то записываем путь к txt файлу в файл. 
-///     
+   if ( Odin_Programmi==true)
+   {
+   Odin_Uchitelia=false; 
+   // Добавить строку в текстовый список
+       // Создаем виджет списка
+    
+    listWidget.show();
+
+    // Добавляем строковую переменную в список
+     myString =Nazvaniye_fayla_s_neyronami_i_signalom;
+    listWidget.addItem(myString);
+   }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
         qDebug() << Nazvaniye_fayla_s_neyronami_i_signalom;
     } // цикл
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Записываем содержимое списка в файл
+    QString filename2 = "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/oshiboshnie_files.txt";
+    QFile file2(filename2);
+    if (file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file2);
+        for (int i = 0; i < listWidget.count(); i++) {
+            out << listWidget.item(i)->text() << "\n";
+        }
+        file2.close();
+        qDebug() << "Содержимое списка записано в файл:" << filename2;
+    } else {
+        qDebug() << "Не удалось открыть файл для записи:" << filename2;
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
     file.close();
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +175,7 @@ void Dialog::on_pushButton_clicked()
                                 , qApp->arguments());  
 //   qApp->quit();
     }
-    else
+    else //Если не распознана не 1:
     {
         Odin_Uchitelia=false;  ui->label_2->setText ("Odin_Programmi==true; Odin_Uchitelia=false");
        
