@@ -43,7 +43,7 @@ QListWidget listWidget2;
     }
 
     QTextStream in(&file);
-    while (!in.atEnd()) {
+    while (!in.atEnd()-1) { // без -1 AddressSanitizer: heap-buffer-overflow - последняя строка с названиями файлов пустая
          Nazvaniye_fayla_s_neyronami_i_signalom = in.readLine();
         // Обработка прочитанной строки
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +69,8 @@ QListWidget listWidget2;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   считаем ошибку то есть решение
 // TODO: FIXME: тут должен быть блок вычисления 200 нейрона
 //########################################################################################################
-    for ( var = 100; var < 200; ++var) // This is the range of neurons
+    for ( var = 100; var < 200//199//200
+    ; ++var) // This is the range of neurons
     {
         for (int neuron_index = 0, synapse_index = 0;   neuron_index < 200, synapse_index < 10100;   ++neuron_index, synapse_index = synapse_index + 100)
         
@@ -81,7 +82,11 @@ QListWidget listWidget2;
 //     if (var < 200)
 //   if ( synapse_index < 10100)
 //  if (list_of_synapses[synapse_index]!=0)
-            list_of_neurons[var]=list_of_neurons[var]+  (list_of_neurons[neuron_index]/ list_of_synapses[synapse_index]); // + на -   
+            list_of_neurons[var]=
+            list_of_neurons[var]+  
+            (list_of_neurons[neuron_index]
+            / 
+            list_of_synapses[synapse_index]); // + на -   
         } // вычитаем нейроны
     }
     
@@ -115,9 +120,23 @@ QListWidget listWidget2;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// 
 /// TODO: если программа считает что это 1 (неправильно) то записываем путь к txt файлу в файл. 
+//########################################################################################################
+   if ( Odin_Programmi==false)
+   {
+  Odin_Uchitelia=true; 
+   // Добавить строку в текстовый список
+       // Создаем виджет списка
+    
+    listWidget2.show();
+
+    // Добавляем строковую переменную в список
+     myString =Nazvaniye_fayla_s_neyronami_i_signalom;
+    listWidget2.addItem(myString);
+   } 
+//########################################################################################################   
    if ( Odin_Programmi==true)
    {
-  // Odin_Uchitelia=false; 
+  Odin_Uchitelia=false; 
    // Добавить строку в текстовый список
        // Создаем виджет списка
     
@@ -127,22 +146,29 @@ QListWidget listWidget2;
      myString =Nazvaniye_fayla_s_neyronami_i_signalom;
     listWidget.addItem(myString);
    }
-//########################################################################################################
-   if ( Odin_Programmi==false)
-   {
-  // Odin_Uchitelia=true; 
-   // Добавить строку в текстовый список
-       // Создаем виджет списка
-    
-    listWidget2.show();
-
-    // Добавляем строковую переменную в список
-     myString =Nazvaniye_fayla_s_neyronami_i_signalom;
-    listWidget2.addItem(myString);
-   }   
+  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
         qDebug() << Nazvaniye_fayla_s_neyronami_i_signalom;
     } // цикл
+    //########################################################################################################    
+ if (    Odin_Programmi==false &&  Odin_Uchitelia==true)   // ошибочные не единицы 
+ {
+    // Записываем содержимое списка в файл
+    QString filename3 = "/home/viktor/my_projects_qt_2/avto_Funktsiya_Resheniya_2/oshiboshnie_files_ne_1.txt";
+    QFile file3(filename3);
+    if (file3.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out2(&file3);
+        for (int i = 0; i < listWidget2.count(); i++) {
+            out2 << listWidget2.item(i)->text() << "\n";
+        }
+        file3.close();
+           std::cout << "Содержимое списка записано в файл:" + filename3.toStdString()<< std::endl;
+        qDebug() << "Содержимое списка записано в файл:" << filename3;
+    } else {
+        qDebug() << "Не удалось открыть файл для записи:" << filename3;
+    }
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (    Odin_Programmi==true &&  Odin_Uchitelia==false)
 {
@@ -161,24 +187,7 @@ if (    Odin_Programmi==true &&  Odin_Uchitelia==false)
         qDebug() << "Не удалось открыть файл для записи:" << filename2;
     }
     }
-//########################################################################################################    
- if (    Odin_Programmi==false &&  Odin_Uchitelia==true)   // ошибочные не единицы 
- {
-    // Записываем содержимое списка в файл
-    QString filename2 = "/home/viktor/my_projects_qt_2/avto_Funktsiya_Resheniya_2/oshiboshnie_files_ne_1.txt";
-    QFile file2(filename2);
-    if (file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&file2);
-        for (int i = 0; i < listWidget.count(); i++) {
-            out << listWidget.item(i)->text() << "\n";
-        }
-        file2.close();
-        qDebug() << "Содержимое списка записано в файл:" << filename2;
-    } else {
-        qDebug() << "Не удалось открыть файл для записи:" << filename2;
-    }
-    }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//// 
     file.close();
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,10 +270,19 @@ void Dialog::on_pushButton_3_clicked() // заведомые не 1
  // неплохо получить тут название проверяемой папки и записать её как... 
     Odin_Uchitelia=false; 
       readFileLineByLine(//"/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
-                        // "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji_2/output.txt"
-                        "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
+                         "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji_2/output.txt"
+                      //  "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
                         );
       // список файлов для проверки
+//        Odin_Uchitelia=true; 
+//   // Добавить строку в текстовый список
+//       // Создаем виджет списка
+    
+//    listWidget2.show();
+
+//    // Добавляем строковую переменную в список
+//     myString =Nazvaniye_fayla_s_neyronami_i_signalom;
+//    listWidget2.addItem(myString);
        std::cout << std::endl<<"программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
 }
 
