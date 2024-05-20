@@ -232,7 +232,7 @@ void Dialog::on_pushButton_3_clicked()
     Odin_Uchitelia=false; 
       readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
       // список файлов для проверки
-       std::cout << "программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
+       std::cout << std::endl<<"программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
 }
 
 
@@ -241,6 +241,6 @@ void Dialog::on_pushButton_2_clicked()
   Odin_Uchitelia=true;   
     readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
      // список файлов для проверки
-     std::cout << "программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
+     std::cout <<  std::endl<<"программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
 }
 
