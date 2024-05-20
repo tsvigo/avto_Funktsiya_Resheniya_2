@@ -14,10 +14,8 @@ using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \brief list_of_synapses
 /// переменные:
-std::vector<unsigned long long> list_of_synapses ;
-std::vector<unsigned long long
-            //  int
-            > list_of_neurons[201] ;//={};
+std::vector<unsigned long long> list_of_synapses;//[10500];// ={};
+std::vector<unsigned long long  > list_of_neurons;//[250];//[201] ;//={};
 long long variable_error;
 QString
 // std::string
@@ -28,6 +26,7 @@ bool Odin_Programmi;
      QString line;
  //    QListWidget listWidget;
      QString myString ;
+     int var ;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////// \brief readFileLineByLine
 ////////////////////////////////////////////////////////////////////////////////////////////////////// \param filename
@@ -65,7 +64,37 @@ QListWidget listWidget2;
     std::istream_iterator<unsigned long long> start2(is2), end2;
     std::vector<unsigned long long> list_of_synapses(start2, end2);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// тут же должно быть решение
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   считаем ошибку то есть решение
+// TODO: FIXME: тут должен быть блок вычисления 200 нейрона
+//########################################################################################################
+    for ( var = 100; var < 200; ++var) // This is the range of neurons
+    {
+        for (int neuron_index = 0, synapse_index = 0;   neuron_index < 200, synapse_index < 10100;   ++neuron_index, synapse_index = synapse_index + 100)
+        
+        {
+            // sigpe арифметическое исключение: (СИНАПСЫ бЫЛИ 0 ДЕление на 0)
+      //      heap-buffer-overflow 
+//       if (neuron_index < 200)
+//      if (list_of_synapses[synapse_index]!=0)
+//     if (var < 200)
+//   if ( synapse_index < 10100)
+//  if (list_of_synapses[synapse_index]!=0)
+            list_of_neurons[var]=list_of_neurons[var]+  (list_of_neurons[neuron_index]/ list_of_synapses[synapse_index]); // + на -   
+        } // вычитаем нейроны
+    }
+    
+    for (int   neuron_index = 100, synapse_index = 10000; neuron_index < 200;   ++neuron_index, ++synapse_index)
+    {
+//           if (neuron_index < 200)
+//      if (list_of_synapses[synapse_index]!=0)
+//     if (var < 200)
+//   if ( synapse_index < 10100)
+//  if (list_of_synapses[synapse_index]!=0)
+        list_of_neurons[200] = list_of_neurons[200] + (list_of_neurons[neuron_index] / list_of_synapses[synapse_index]); // + на -
+    }
+//########################################################################################################        
     variable_error     =   1073741824-list_of_neurons[200] ;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    std::cout << "variable_error = "<< variable_error<< std::endl;
@@ -227,19 +256,26 @@ void Dialog::on_pushButton_clicked()
 }
 
 
-void Dialog::on_pushButton_3_clicked()
+void Dialog::on_pushButton_3_clicked() // заведомые не 1
 {
+ // неплохо получить тут название проверяемой папки и записать её как... 
     Odin_Uchitelia=false; 
-      readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
+      readFileLineByLine(//"/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
+                        // "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji_2/output.txt"
+                        "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
+                        );
       // список файлов для проверки
        std::cout << std::endl<<"программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
 }
 
 
-void Dialog::on_pushButton_2_clicked()
+void Dialog::on_pushButton_2_clicked() // заведомые 1
 {
   Odin_Uchitelia=true;   
-    readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
+    readFileLineByLine(
+   // "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
+   "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/Edinitsy_iz_shriftov_posle_pereustanovki_Debiana/output.txt"
+    );
      // список файлов для проверки
      std::cout <<  std::endl<<"программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
 }
