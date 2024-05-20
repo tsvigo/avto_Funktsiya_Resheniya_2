@@ -56,6 +56,32 @@ PushButton</string>
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TextLabel_2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>270</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Заведомые 1 PushButton_2</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>270</y>
+     <width>311</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Заведомые не 1 PushButton_3</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

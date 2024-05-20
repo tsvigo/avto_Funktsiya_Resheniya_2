@@ -35,6 +35,8 @@ void readFileLineByLine(const QString& filename) {
 
 QListWidget listWidget;
 
+QListWidget listWidget2;
+
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Could not open file for reading:" << filename;
@@ -86,7 +88,7 @@ QListWidget listWidget;
 /// TODO: если программа считает что это 1 (неправильно) то записываем путь к txt файлу в файл. 
    if ( Odin_Programmi==true)
    {
-   Odin_Uchitelia=false; 
+  // Odin_Uchitelia=false; 
    // Добавить строку в текстовый список
        // Создаем виджет списка
     
@@ -96,12 +98,28 @@ QListWidget listWidget;
      myString =Nazvaniye_fayla_s_neyronami_i_signalom;
     listWidget.addItem(myString);
    }
+//########################################################################################################
+   if ( Odin_Programmi==false)
+   {
+  // Odin_Uchitelia=true; 
+   // Добавить строку в текстовый список
+       // Создаем виджет списка
+    
+    listWidget2.show();
+
+    // Добавляем строковую переменную в список
+     myString =Nazvaniye_fayla_s_neyronami_i_signalom;
+    listWidget2.addItem(myString);
+   }   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
         qDebug() << Nazvaniye_fayla_s_neyronami_i_signalom;
     } // цикл
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (    Odin_Programmi==true &&  Odin_Uchitelia==false)
+{
     // Записываем содержимое списка в файл
-    QString filename2 = "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/oshiboshnie_files.txt";
+    QString filename2 = "/home/viktor/my_projects_qt_2/avto_Funktsiya_Resheniya_2/oshiboshnie_files_1.txt";
+    //"/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/oshiboshnie_files_1.txt";
     QFile file2(filename2);
     if (file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file2);
@@ -112,6 +130,24 @@ QListWidget listWidget;
         qDebug() << "Содержимое списка записано в файл:" << filename2;
     } else {
         qDebug() << "Не удалось открыть файл для записи:" << filename2;
+    }
+    }
+//########################################################################################################    
+ if (    Odin_Programmi==false &&  Odin_Uchitelia==true)   // ошибочные не единицы 
+ {
+    // Записываем содержимое списка в файл
+    QString filename2 = "/home/viktor/my_projects_qt_2/avto_Funktsiya_Resheniya_2/oshiboshnie_files_ne_1.txt";
+    QFile file2(filename2);
+    if (file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file2);
+        for (int i = 0; i < listWidget.count(); i++) {
+            out << listWidget.item(i)->text() << "\n";
+        }
+        file2.close();
+        qDebug() << "Содержимое списка записано в файл:" << filename2;
+    } else {
+        qDebug() << "Не удалось открыть файл для записи:" << filename2;
+    }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
     file.close();
@@ -128,7 +164,8 @@ Dialog::Dialog(QWidget *parent)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    std::cout << "avto_Funktsiya_Resheniya_2"<< std::endl;
    // надо иметь файл со списком с полными путями .txt изображений пейзажей
-   readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
+//   readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
+   // TODO: видимо переделать на выбор файла в диалоге
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// открываем файл для решения
     /// \brief fileName
 ///
@@ -187,5 +224,23 @@ void Dialog::on_pushButton_clicked()
     }
     //        Odin_Programmi==false;
     // если одно сочетание запускаем одну программу, если другое - другую
+}
+
+
+void Dialog::on_pushButton_3_clicked()
+{
+    Odin_Uchitelia=false; 
+      readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
+      // список файлов для проверки
+       std::cout << "программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
+}
+
+
+void Dialog::on_pushButton_2_clicked()
+{
+  Odin_Uchitelia=true;   
+    readFileLineByLine("/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt");
+     // список файлов для проверки
+     std::cout << "программа avto_Funktsiya_Resheniya_2 окончена"<< std::endl;
 }
 
