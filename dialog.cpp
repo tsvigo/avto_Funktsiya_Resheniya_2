@@ -176,18 +176,24 @@ if (    Odin_Programmi==true &&  Odin_Uchitelia==false)
     QString filename2 = "/home/viktor/my_projects_qt_2/avto_Funktsiya_Resheniya_2/oshiboshnie_files_1.txt";
     //"/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/oshiboshnie_files_1.txt";
     QFile file2(filename2);
-    if (file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    if (file2.open(QIODevice::WriteOnly | QIODevice::Text))
+     {
         QTextStream out(&file2);
-        for (int i = 0; i < listWidget.count(); i++) {
+        for (int i = 0; i < listWidget.count(); i++)
+         {
             out << listWidget.item(i)->text() << "\n";
         }
         file2.close();
         qDebug() << "Содержимое списка записано в файл:" << filename2;
+           std::cout << "Содержимое списка записано в файл:" + filename2.toStdString()<< std::endl;
     } else {
         qDebug() << "Не удалось открыть файл для записи:" << filename2;
     }
+    
     }
 //// 
+ std::cout << "Odin_Programmi:" << Odin_Programmi<< std::endl; //тут должна быть 1 или true а её нет
+  std::cout << "Odin_Uchitelia:" << Odin_Uchitelia<< std::endl;
     file.close();
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -268,6 +274,7 @@ void Dialog::on_pushButton_clicked()
 void Dialog::on_pushButton_3_clicked() // заведомые не 1
 {
  // неплохо получить тут название проверяемой папки и записать её как... 
+ Odin_Programmi=true;
     Odin_Uchitelia=false; 
       readFileLineByLine(//"/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
                          "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji_2/output.txt"
@@ -289,7 +296,8 @@ void Dialog::on_pushButton_3_clicked() // заведомые не 1
 
 void Dialog::on_pushButton_2_clicked() // заведомые 1
 {
-  Odin_Uchitelia=true;   
+  Odin_Uchitelia=true;  
+   Odin_Programmi=false;
     readFileLineByLine(
    // "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/paths_to_files.txt"
    "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/Edinitsy_iz_shriftov_posle_pereustanovki_Debiana/output.txt"
